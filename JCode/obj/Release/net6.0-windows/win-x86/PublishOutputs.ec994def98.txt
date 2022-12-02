@@ -1,0 +1,2 @@
+C:\Users\zouqi\Desktop\Projects\JCode\JCode\bin\Release\net6.0-windows\publish\win-x86\JCode.pdb
+C:\Users\zouqi\Desktop\Projects\JCode\JCode\bin\Release\net6.0-windows\publish\win-x86\JCode.exe

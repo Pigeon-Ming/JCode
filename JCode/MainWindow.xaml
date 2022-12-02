@@ -1,0 +1,82 @@
+﻿<Window x:Class="JCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JCode"
+        xmlns:local1="clr-namespace:JCode.Model"
+        mc:Ignorable="d"
+        Title="JCode" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="0.4*" MinHeight="28"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_文件">
+                <MenuItem Header="_新建" Name="Menu_File_Creat" Click="Menu_File_Creat_Click"/>
+                <MenuItem Header="_打开" Name="Menu_File_Open" Click="Menu_File_Open_Click"/>
+                <MenuItem Header="_保存" Name="Menu_File_Save" Click="Menu_File_Save_Click"/>
+                <MenuItem Header="_另存为" Name="Menu_File_SaveAs" Click="Menu_File_SaveAs_Click"/>
+                <Separator />
+                <MenuItem Header="_退出JCode" Name="Menu_File_Exit" Click="Menu_File_Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="生成">
+                <MenuItem Header="生成程序" Name="Menu_Build_BuildProgram" Click="Menu_Build_BuildProgram_Click"/>
+            </MenuItem>
+            <MenuItem Header="帮助">
+                <MenuItem Header="JigsawOS开发文档"/>
+                <MenuItem Header="关于JCode" Name="Menu_Help_AboutJCode" Click="Menu_Help_AboutJCode_Click"/>
+            </MenuItem>
+            
+        </Menu>
+        <TextBlock Text="JigsawOS IDE" HorizontalAlignment="Right" Margin="0,0,8,0" Foreground="Gray"/>
+        <ToolBarTray Grid.Row="1" Height="25">
+            <ToolBar>
+                <Button Content="新建" Click="Menu_File_Creat_Click"/>
+                <Button Content="打开" Click="Menu_File_Open_Click"/>
+                <Button Content="保存" Click="Menu_File_Save_Click"/>
+                <Button Content="生成" Click="Menu_Build_BuildProgram_Click"/>
+                
+            </ToolBar>
+        </ToolBarTray>
+        <TabControl Name="MainTabControl" SelectionChanged="MainTabControl_SelectionChanged" Grid.Row="2" TabStripPlacement="Top">
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="local1:LocalFile">
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
+        <ScrollViewer Grid.Row="3">
+            <Grid Name="EditControl" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <RichTextBox IsEnabled="False" Name="Content_Line" Margin="0,0,0,0" HorizontalAlignment="Stretch" />
+                <RichTextBox Grid.Column="1" Name="Content_RichTextBox" TextChanged="Content_RichTextBox_TextChanged" >
+                    <RichTextBox.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="LineHeight" Value="8"/>
+                        </Style>
+                    </RichTextBox.Resources>
+                </RichTextBox>
+
+            </Grid>
+        </ScrollViewer>
+        <GridSplitter Height="5" HorizontalAlignment="Stretch" Grid.Row="4"/>
+        <TabControl Grid.Row="5">
+            <TabItem Header="输出">
+                <ScrollViewer >
+                    <TextBox IsReadOnly="True" TextWrapping="Wrap" Name="OutPut_TextBox"/>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
