@@ -7,6 +7,15 @@
         xmlns:local1="clr-namespace:JCode.Model"
         mc:Ignorable="d"
         Title="JCode" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ContextMenu  x:Key="MainTabControl_RightButtonUpMenu" >
+                <MenuItem Header="复制文件路径" Name="MainTabControl_RightButtonUpMenu_CopyFilePath" Click="MainTabControl_RightButtonUpMenu_CopyFilePath_Click"/>
+                <Separator/>
+                <MenuItem Header="关闭" Name="MainTabControl_RightButtonUpMenu_CloseFile" Click="MainTabControl_RightButtonUpMenu_CloseFile_Click"/>
+            </ContextMenu>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -45,7 +54,7 @@
                 
             </ToolBar>
         </ToolBarTray>
-        <TabControl Name="MainTabControl" SelectionChanged="MainTabControl_SelectionChanged" Grid.Row="2" TabStripPlacement="Top">
+        <TabControl ContextMenu="{StaticResource MainTabControl_RightButtonUpMenu}" MouseRightButtonUp="MainTabControl_MouseRightButtonUp" Name="MainTabControl" SelectionChanged="MainTabControl_SelectionChanged" Grid.Row="2" TabStripPlacement="Top">
             <TabControl.ItemTemplate>
                 <DataTemplate DataType="local1:LocalFile">
                     <TextBlock Text="{Binding Name}"/>

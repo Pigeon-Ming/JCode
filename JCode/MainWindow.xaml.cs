@@ -40,10 +40,18 @@ namespace JCode
             Directory.CreateDirectory(JCodeFolderLocation);
             Directory.CreateDirectory(JCodeFolderLocation+"\\Compiler");
             Directory.CreateDirectory(JCodeFolderLocation+"\\Jigsaw");
-            
+
+            this.Closing += MainWindow_Closing;
         }
 
-
+        private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!ExitJCode())
+            {
+                e.Cancel = true;
+            }
+            
+        }
 
         void OpenFile()
         {
@@ -196,10 +204,15 @@ namespace JCode
         bool CloseFile(int FileIndexInTab)
         {
             LocalFile file = ((LocalFile)MainTabControl.Items[FileIndexInTab]);
+            Debug.WriteLine(file.FileContent+"\n"+file.FileLocation);
             if (string.IsNullOrEmpty(file.FileLocation))
             {
                 LocalFileManager.SaveFileAs(file);
                 MainTabControl.Items.RemoveAt(FileIndexInTab);
+                if (MainTabControl.Items.Count==0)
+                {
+                    EditControl.Visibility = Visibility.Collapsed;
+                }
                 return true;
             }
             if (file.ischanged)
@@ -221,19 +234,25 @@ namespace JCode
                 }
             }
             MainTabControl.Items.RemoveAt(FileIndexInTab);
+            if (MainTabControl.Items.Count == 0)
+            {
+                EditControl.Visibility = Visibility.Collapsed;
+            }
             return true;
         }
 
-        private void Exit()
+        private bool ExitJCode()
         {
-            for (int i=0;i<MainTabControl.Items.Count;i++)
+            while (MainTabControl.Items.Count!=0)
             {
                 if (!CloseFile(MainTabControl.Items.Count - 1))
                 {
-                    return;
+                    
+                    return false;
                 }
             }
-            this.Exit();
+            Application.Current.Shutdown();
+            return true;
         }
 
         private void Menu_File_Creat_Click(object sender, RoutedEventArgs e)
@@ -256,6 +275,14 @@ namespace JCode
             LocalFileManager.SaveFileAs(localFiles[MainTabControl.SelectedIndex]);
         }
 
+        private void Menu_File_Exit_Click(object sender, RoutedEventArgs e)
+        {
+            ExitJCode();
+        }
+
+
+
+
         private void Menu_Build_BuildProgram_Click(object sender, RoutedEventArgs e)
         {
             BuildProgram();
@@ -266,7 +293,12 @@ namespace JCode
             changingTab = true;
             Debug.WriteLine(MainTabControl.SelectedIndex);
             Content_RichTextBox.Document = new FlowDocument();
-            
+
+            if (MainTabControl.Items.Count<1|| MainTabControl.SelectedIndex<0)
+            {
+                changingTab = false;
+                return;
+            }
 
             Paragraph paragraph = new Paragraph();
             Run run = new Run() { Text = localFiles[MainTabControl.SelectedIndex].FileContent /*, Background = new SolidColorBrush(Color.FromRgb(255, 0, 0)) */};
@@ -309,11 +341,16 @@ namespace JCode
             changingTab = false;
         }
 
+
         
         private void Content_RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            
+
             if (changingTab==false)
             {
+                ((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]).ischanged=true;
+                
                 TextRange textRange = new TextRange(Content_RichTextBox.Document.ContentStart, Content_RichTextBox.Document.ContentEnd);
                 localFiles[MainTabControl.SelectedIndex].FileContent = textRange.Text;
             }
@@ -347,9 +384,20 @@ namespace JCode
             aboutWindow.ShowDialog();
         }
 
-        private void Menu_File_Exit_Click(object sender, RoutedEventArgs e)
+        private void MainTabControl_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             
+        }
+
+        private void MainTabControl_RightButtonUpMenu_CopyFilePath_Click(object sender, RoutedEventArgs e)
+        {
+            
+            Clipboard.SetDataObject(((LocalFile)MainTabControl.SelectedItem).FileLocation, true);
+        }
+
+        private void MainTabControl_RightButtonUpMenu_CloseFile_Click(object sender, RoutedEventArgs e)
+        {
+            CloseFile(MainTabControl.SelectedIndex);
         }
     }
 }
