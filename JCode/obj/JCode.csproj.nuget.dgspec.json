@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\zouqi\\Desktop\\Projects\\JCode\\.vs\\JCode\\JCode.csproj": {}
+    "C:\\Users\\zouqi\\Desktop\\Projects\\JCodeGithub\\JCode\\JCode\\JCode.csproj": {}
   },
   "projects": {
-    "C:\\Users\\zouqi\\Desktop\\Projects\\JCode\\.vs\\JCode\\JCode.csproj": {
+    "C:\\Users\\zouqi\\Desktop\\Projects\\JCodeGithub\\JCode\\JCode\\JCode.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\zouqi\\Desktop\\Projects\\JCode\\.vs\\JCode\\JCode.csproj",
+        "projectUniqueName": "C:\\Users\\zouqi\\Desktop\\Projects\\JCodeGithub\\JCode\\JCode\\JCode.csproj",
         "projectName": "JCode",
-        "projectPath": "C:\\Users\\zouqi\\Desktop\\Projects\\JCode\\.vs\\JCode\\JCode.csproj",
+        "projectPath": "C:\\Users\\zouqi\\Desktop\\Projects\\JCodeGithub\\JCode\\JCode\\JCode.csproj",
         "packagesPath": "C:\\Users\\zouqi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\zouqi\\Desktop\\Projects\\JCode\\.vs\\JCode\\obj\\",
+        "outputPath": "C:\\Users\\zouqi\\Desktop\\Projects\\JCodeGithub\\JCode\\JCode\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
