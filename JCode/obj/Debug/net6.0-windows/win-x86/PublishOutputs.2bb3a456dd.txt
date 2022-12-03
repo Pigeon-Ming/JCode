@@ -1,0 +1,2 @@
+C:\Users\zouqi\Desktop\Projects\JCodeGithub\JCode\JCode\bin\Debug\net6.0-windows\publish\win-x86\JCode.pdb
+C:\Users\zouqi\Desktop\Projects\JCodeGithub\JCode\JCode\bin\Debug\net6.0-windows\publish\win-x86\JCode.exe

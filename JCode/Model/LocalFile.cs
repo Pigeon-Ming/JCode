@@ -22,6 +22,7 @@ namespace JCode.Model
         {
             
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            
             openFileDialog.Filter = "c语言文件(*.c)|*.c|All files (*.*)|*.*";
             bool? result = openFileDialog.ShowDialog();
             if (result == true)
@@ -57,6 +58,10 @@ namespace JCode.Model
         {
             Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
             saveFileDialog.Filter = "c语言文件(*.c)|*.c|All files (*.*)|*.*";
+            if (file.Name!=null)
+            {
+                saveFileDialog.FileName = file.Name;
+            }
             if (saveFileDialog.ShowDialog() == true)
             {
 

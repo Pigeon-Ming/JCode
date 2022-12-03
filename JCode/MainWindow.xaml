@@ -39,7 +39,7 @@
                 <MenuItem Header="生成程序" Name="Menu_Build_BuildProgram" Click="Menu_Build_BuildProgram_Click"/>
             </MenuItem>
             <MenuItem Header="帮助">
-                <MenuItem Header="JigsawOS开发文档"/>
+                <MenuItem Header="JigsawOS开发文档" Name="Menu_Help_DevDocument" Click="Menu_Help_DevDocument_Click"/>
                 <MenuItem Header="关于JCode" Name="Menu_Help_AboutJCode" Click="Menu_Help_AboutJCode_Click"/>
             </MenuItem>
             
@@ -64,10 +64,10 @@
         <ScrollViewer Grid.Row="3">
             <Grid Name="EditControl" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="33"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <RichTextBox IsEnabled="False" Name="Content_Line" Margin="0,0,0,0" HorizontalAlignment="Stretch" />
+                <RichTextBox HorizontalContentAlignment="Right" IsEnabled="False" Name="Content_Line" Margin="0,0,0,0" HorizontalAlignment="Stretch" />
                 <RichTextBox Grid.Column="1" Name="Content_RichTextBox" TextChanged="Content_RichTextBox_TextChanged" >
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
