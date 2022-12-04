@@ -46,3 +46,6 @@ C:\Users\zouqi\Desktop\Projects\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows
 C:\Users\zouqi\Desktop\Projects\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\JCode.pdb
 C:\Users\zouqi\Desktop\Projects\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\JCode.genruntimeconfig.cache
 C:\Users\zouqi\Desktop\Projects\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\ref\JCode.dll
+C:\Users\zouqi\Desktop\Projects\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\OtherWindow\Dictionaries\BuildSettingsWindowDictionary.baml
+C:\Users\zouqi\Desktop\Projects\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\OtherWindow\BuildSettingsWindow.g.cs
+C:\Users\zouqi\Desktop\Projects\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\OtherWindow\BuildSettingsWindow.baml

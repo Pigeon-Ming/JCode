@@ -38,6 +38,9 @@
             <MenuItem Header="生成">
                 <MenuItem Header="生成程序" Name="Menu_Build_BuildProgram" Click="Menu_Build_BuildProgram_Click"/>
             </MenuItem>
+            <MenuItem Header="选项">
+                <MenuItem Header="生成设置" Name="Menu_Setting_BuildSettings" Click="Menu_Setting_BuildSettings_Click"/>
+            </MenuItem>
             <MenuItem Header="帮助">
                 <MenuItem Header="JigsawOS开发文档" Name="Menu_Help_DevDocument" Click="Menu_Help_DevDocument_Click"/>
                 <MenuItem Header="关于JCode" Name="Menu_Help_AboutJCode" Click="Menu_Help_AboutJCode_Click"/>

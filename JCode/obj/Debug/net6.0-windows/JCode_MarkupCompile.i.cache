@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\zouqi\Desktop\Projects\JCodeGithub\JCode\JCode\App.xaml
-2-1029120233
+4-56513555
 
-8866465056
+10-13095744
 1942007414746
-MainWindow.xaml;OtherWindow\AboutWindow.xaml;
+MainWindow.xaml;OtherWindow\AboutWindow.xaml;OtherWindow\BuildSettingsWindow.xaml;OtherWindow\Dictionaries\BuildSettingsWindowDictionary.xaml;
 
 False
 

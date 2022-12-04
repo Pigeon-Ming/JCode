@@ -28,6 +28,9 @@ namespace JCode
         public readonly string JCodeFolderLocation_Left = "C:/Users/" + System.Environment.UserName + "/Documents/JCode";
         readonly string tempFolderLocation = "C:\\Users\\" + System.Environment.UserName + "\\Documents\\JCode\\temp";
         readonly string tempFolderLocation_Left = "C:/Users/" + System.Environment.UserName + "/Documents/JCode/temp";
+        public readonly string SettingsFolderLocation = "C:\\Users\\" + System.Environment.UserName + "\\Documents\\JCode\\Settings\\";
+        public readonly string SettingsFolderLocation_Left = "C:/Users/" + System.Environment.UserName + "/Documents/JCode/Settings/";
+
 
         //public List<LocalFile> localFiles = new List<LocalFile>();
         int NewFileNameIndex = 0;//未命名0，未命名1……
@@ -40,6 +43,7 @@ namespace JCode
             Directory.CreateDirectory(JCodeFolderLocation);
             Directory.CreateDirectory(JCodeFolderLocation+"\\Compiler");
             Directory.CreateDirectory(JCodeFolderLocation+"\\Jigsaw");
+            Directory.CreateDirectory(JCodeFolderLocation+"\\Settings");
 
             this.Closing += MainWindow_Closing;
         }
@@ -79,6 +83,14 @@ namespace JCode
 
         async Task BuildProgram()
         {
+            int StackSize = 1024, MallocSize = 64;
+            Debug.WriteLine(SettingsManager.GetSetting("BuildSettings_StackSize"));
+            if (SettingsManager.GetSetting("BuildSettings_StackSize") != "SettingNotFound") StackSize = Convert.ToInt32(SettingsManager.GetSetting("BuildSettings_StackSize"));
+            if (SettingsManager.GetSetting("BuildSettings_MallocSize") != "SettingNotFound") MallocSize = Convert.ToInt32(SettingsManager.GetSetting("BuildSettings_MallocSize"));
+            
+
+
+
             Directory.CreateDirectory(tempFolderLocation);
             if (!LocalFileManager.SaveFile((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex])) return;
 
@@ -91,8 +103,8 @@ namespace JCode
             command += JCodeFolderLocation + "\\Compiler" + "\\cc1.exe -I../Jigsaw/ -Os -Wall -quiet -o " + tempFolderLocation_Left + "/temp.gas " + tempFolderLocation_Left + "/temp.c\n";
             command += JCodeFolderLocation + "\\Compiler" + "\\gas2nask.exe -a " + tempFolderLocation_Left + "/temp.gas " + tempFolderLocation_Left + "/temp.nas\n";
             command += JCodeFolderLocation + "\\Compiler" + "\\nask.exe " + tempFolderLocation_Left + "/temp.nas " + tempFolderLocation_Left + "/temp.obj " + tempFolderLocation_Left + "/temp.lst\n";
-            command += JCodeFolderLocation + "\\Compiler\\obj2bim.exe @" +JCodeFolderLocation_Left + "/Jigsaw/haribote.rul " + "out:" + tempFolderLocation_Left + "/temp.bim " + "map:" + tempFolderLocation_Left + "/temp.map " + "stack:8k         " + tempFolderLocation_Left + "/temp.obj " + JCodeFolderLocation_Left + "/Jigsaw/apilib/apilib.lib\n";
-            command += JCodeFolderLocation + "\\Compiler\\bim2hrb.exe "+ tempFolderLocation_Left+ "/temp.bim " + tempFolderLocation_Left + "/temp.hrb 56k";
+            command += JCodeFolderLocation + "\\Compiler\\obj2bim.exe @" +JCodeFolderLocation_Left + "/Jigsaw/haribote.rul " + "out:" + tempFolderLocation_Left + "/temp.bim " + "map:" + tempFolderLocation_Left + "/temp.map " + "stack:"+StackSize+"k         " + tempFolderLocation_Left + "/temp.obj " + JCodeFolderLocation_Left + "/Jigsaw/apilib/apilib.lib\n";
+            command += JCodeFolderLocation + "\\Compiler\\bim2hrb.exe "+ tempFolderLocation_Left+ "/temp.bim " + tempFolderLocation_Left + "/temp.hrb "+MallocSize+"k\n";
 
             
             OutPut_TextBox.Text = await Cmd.RunCmd(command);
@@ -330,7 +342,12 @@ namespace JCode
             ExitJCode();
         }
 
-
+        private void Menu_Setting_BuildSettings_Click(object sender, RoutedEventArgs e)
+        {
+            BuildSettingsWindow buildSettingsWindow = new BuildSettingsWindow();
+            buildSettingsWindow.Owner = this;
+            buildSettingsWindow.ShowDialog();
+        }
 
 
         private void Menu_Build_BuildProgram_Click(object sender, RoutedEventArgs e)
@@ -460,5 +477,7 @@ namespace JCode
             //url = url.Replace("&", "^&");
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
         }
+
+        
     }
 }

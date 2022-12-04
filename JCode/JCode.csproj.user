@@ -7,9 +7,18 @@
     <Compile Update="OtherWindow\AboutWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="OtherWindow\BuildSettingsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="OtherWindow\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="OtherWindow\BuildSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="OtherWindow\Dictionaries\BuildSettingsWindowDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

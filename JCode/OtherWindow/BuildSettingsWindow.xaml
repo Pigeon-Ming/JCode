@@ -1,0 +1,53 @@
+﻿<Window x:Class="JCode.OtherWindow.BuildSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JCode.OtherWindow"
+        mc:Ignorable="d"
+        Title="BuildSettingsWindow" Height="225" Width="400" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionaries/BuildSettingsWindowDictionary.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <StackPanel>
+                <TextBlock Text="可执行文件空间分配"/>
+                <Grid Height="25">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource SettingTitle}" Text="Stack大小(默认1024K)"/>
+                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Orientation="Horizontal" Margin="8,0,8,0">
+                        <TextBox Name="StackSize" Text="1024" Width="100" Margin="8,0,8,0"/>
+                        <TextBlock Text="K"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Height="25">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource SettingTitle}" Text="Malloc大小(默认64K)"/>
+                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Orientation="Horizontal" Margin="8,0,8,0">
+                        <TextBox Name="MallocSize" Text="64" Width="100" Margin="8,0,8,0"/>
+                        <TextBlock Text="K"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="1" Background="DarkGray">
+            <Button Content="保存" Name="SaveSettings" Height="20" Width="80" Click="SaveSettings_Click" HorizontalAlignment="Right" Margin="8"/>
+        </StackPanel>
+    </Grid>
+</Window>
