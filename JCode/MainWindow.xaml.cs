@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using JCode.Model;
 using JCode.OtherWindow;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace JCode
 {
@@ -24,8 +25,8 @@ namespace JCode
     /// </summary>
     public partial class MainWindow : Window
     {
-        public readonly string JCodeFolderLocation = "C:\\Users\\" + System.Environment.UserName + "\\Documents\\JCode";
-        public readonly string JCodeFolderLocation_Left = "C:/Users/" + System.Environment.UserName + "/Documents/JCode";
+        public readonly string JCodeFolderLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments).Replace("/","\\")+"\\JCode";/*"C:\\Users\\" + System.Environment.UserName + "\\Documents\\JCode";*/
+        public readonly string JCodeFolderLocation_Left = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"/JCode";
         readonly string tempFolderLocation = "C:\\Users\\" + System.Environment.UserName + "\\Documents\\JCode\\temp";
         readonly string tempFolderLocation_Left = "C:/Users/" + System.Environment.UserName + "/Documents/JCode/temp";
         public readonly string SettingsFolderLocation = "C:\\Users\\" + System.Environment.UserName + "\\Documents\\JCode\\Settings\\";
@@ -34,7 +35,8 @@ namespace JCode
 
         //public List<LocalFile> localFiles = new List<LocalFile>();
         int NewFileNameIndex = 0;//未命名0，未命名1……
-        bool changingTab = false;
+        int lastSelectTab = -1;
+
 
         public MainWindow()
         {
@@ -151,111 +153,6 @@ namespace JCode
                 FileStream fileStream = new FileStream(cFileLocation + "\\" + hrbFileName + ".hrb", FileMode.OpenOrCreate, FileAccess.Write);
                 fileStream.Write(data, 0, data.Length);
                 fileStream.Close();
-                if (false)
-                {
-                    //FileStream myStream = new FileStream(tempFolderLocation+"\\temp.bim", FileMode.Open, FileAccess.Read);
-                    //BinaryReader myReader = new BinaryReader(myStream);
-                    //FileInfo f = new FileInfo(tempFolderLocation + "\\temp.bim");
-
-                    //Debug.WriteLine("！");
-                    //if (myReader.PeekChar() != -1)
-                    //{
-                    //    byte[] data;
-
-                    //    data = myReader.ReadBytes((int)f.Length);
-                    //    byte[] finaldata = new byte[data.Length];
-                    //    //string data_Dec="";
-                    //    for (int i = 0; i < f.Length; i++)
-                    //    {
-                    //        Debug.Write(data[i]+" ");
-                    //    }
-
-                    //    ////开始更改数据
-                    //    //data[0] = 0;
-                    //    //data[1] = 48;
-
-                    //    //data[4] = 72;//H
-                    //    //data[5] = 97;//a
-                    //    //data[6] = 114;//r
-                    //    //data[7] = 105;//i
-                    //    //data[8] = 0;//
-
-                    //    //for (int i=0;i<12;i++)
-                    //    //{
-                    //    //    finaldata[i] = data[i];
-                    //    //}
-                    //    //finaldata[12] = 0;
-                    //    //finaldata[13] = 32;
-                    //    //finaldata[14] = 0;
-                    //    //finaldata[15] = 0;
-                    //    //for (int i = 16; i < 19; i++)
-                    //    //{
-                    //    //    finaldata[i] = data[i-4];
-                    //    //}
-                    //    //finaldata[20] = 40;
-                    //    //finaldata[21] = 1;
-                    //    //for (int i = 22; i < 27; i++)
-                    //    //{
-                    //    //    finaldata[i] = 0;
-                    //    //}
-
-                    //    //finaldata[27] = 233;
-                    //    //finaldata[28] = 254;
-                    //    //finaldata[29] = 0;
-
-                    //    //finaldata[30] = 0;
-                    //    //finaldata[31] = 0;
-                    //    //finaldata[32] = 32;
-                    //    //finaldata[33] = 32;
-                    //    //finaldata[34] = 0;
-                    //    //finaldata[35] = 0;
-                    //    //for (int i = 36; i<finaldata.Length; i++)
-                    //    //{
-                    //    //    finaldata[i] = data[i];
-                    //    //}
-
-                    //    //数据更改完毕
-
-                    //    Debug.Write("\n");
-                    //    for (int i = 0; i < f.Length; i++)
-                    //    {
-                    //        Debug.Write(data[i] + " ");
-                    //    }
-
-                    //    string hrbFileLocation = ((LocalFile)MainTabControl.SelectedItem).FileLocation;
-                    //    hrbFileLocation = hrbFileLocation.Substring(0, hrbFileLocation.LastIndexOf("\\"));
-                    //    string hrbFileName = ((LocalFile)MainTabControl.SelectedItem).Name;
-                    //    hrbFileName = hrbFileName.Substring(0,hrbFileName.LastIndexOf("."));
-                    //    Debug.WriteLine(hrbFileLocation + "\\" + hrbFileName + ".hrb");
-                    //    using (FileStream fs = new FileStream(hrbFileLocation + "\\" + hrbFileName + ".hrb"/*tempFolderLocation+"\\temp.org"*/, FileMode.OpenOrCreate, FileAccess.Write))
-                    //    {
-                    //        fs.Write(finaldata, 0, finaldata.Length);
-
-
-                    //        if (string.IsNullOrEmpty(hrbFileLocation))
-                    //        {
-                    //            OutPut_TextBox.Text += "\n生成失败";
-                    //            return;
-                    //        }
-
-                    //        //hrbFileLocation = hrbFileLocation.Substring(0,hrbFileLocation.LastIndexOf("\\"));
-                    //        //Debug.WriteLine(hrbFileLocation);
-                    //        //FileStream fs1 = new FileStream(hrbFileLocation+"\\"+hrbFileName, FileMode.OpenOrCreate, FileAccess.Write);
-
-
-                    //        //fs.CopyTo(fs1);
-                    //        fs.Close();
-                    //        //fs1.Close();
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    Debug.WriteLine("temp.bim 不存在");
-                    //}
-                    //myReader.Close();
-                    //myStream.Close();
-                }
 
 
 
@@ -313,7 +210,7 @@ namespace JCode
                     return false;
                 }
             }
-            Application.Current.Shutdown();
+            System.Windows.Application.Current.Shutdown();
             return true;
         }
 
@@ -357,92 +254,22 @@ namespace JCode
 
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            changingTab = true;
-            Debug.WriteLine(MainTabControl.SelectedIndex);
-            Content_RichTextBox.Document = new FlowDocument();
-
-            if (MainTabControl.Items.Count<1|| MainTabControl.SelectedIndex<0)
+            if (MainTabControl.SelectedIndex == -1)
             {
-                changingTab = false;
+                lastSelectTab = -1;
                 return;
             }
-
-            Paragraph paragraph = new Paragraph();
-            Run run = new Run() { Text = ((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]).FileContent /*, Background = new SolidColorBrush(Color.FromRgb(255, 0, 0)) */};
-            
-            paragraph.Inlines.Add(run);
-
-
-            
-            
-            Debug.WriteLine(run.Text);
-            //Content_RichTextBox.Document.Blocks.Clear();
-            
-            Content_RichTextBox.Document.Blocks.Add(paragraph);
-
-            TextRange MyText = new TextRange(
-                    Content_RichTextBox.Document.ContentStart,
-                    Content_RichTextBox.Document.ContentEnd
-            );
-
-            string[] splittedLines = MyText.Text.Split(new[] { Environment.NewLine }
-                                          , StringSplitOptions.None);
-            //MessageBox.Show(splittedLines.Length.ToString());
-
-
-            
-            int max = Convert.ToInt32(splittedLines.Length);
-            string linetext="";
-            for (int i = 1; i < max; i++)
+            if (lastSelectTab != -1 && lastSelectTab < MainTabControl.Items.Count)
             {
-                linetext += i.ToString() + '\n';
+                Debug.WriteLine(lastSelectTab+"||"+MainTabControl.SelectedIndex);
+                ((LocalFile)MainTabControl.Items[lastSelectTab]).FileContent = Content_RichTextBox.Text;
             }
-
-            Paragraph paragraph1 = new Paragraph();
-            Run run1 = new Run() { Text = linetext /*, Background = new SolidColorBrush(Color.FromRgb(255, 0, 0)) */};
-
-           
-            paragraph1.Inlines.Add(run1);
-            Content_Line.Document.Blocks.Clear();
-            Content_Line.Document.Blocks.Add(paragraph1);
-            changingTab = false;
+            
+            
+            Content_RichTextBox.Text = ((LocalFile)MainTabControl.SelectedItem).FileContent;
+            lastSelectTab = MainTabControl.SelectedIndex;
         }
 
-
-        
-        private void Content_RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
-
-            if (changingTab==false)
-            {
-                ((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]).ischanged=true;
-                
-                TextRange textRange = new TextRange(Content_RichTextBox.Document.ContentStart, Content_RichTextBox.Document.ContentEnd);
-                ((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]).FileContent = textRange.Text;
-            }
-
-            if (false)
-            {
-                //    localFiles[MainTabControl.SelectedIndex].FileContent = new TextRange(Content_RichTextBox.Document.ContentStart, Content_RichTextBox.Document.ContentEnd).Text;
-
-                //    TextRange MyText = new TextRange(
-                //            ((RichTextBox)sender).Document.ContentStart,
-                //            ((RichTextBox)sender).Document.ContentEnd
-                //            );
-
-                //    string[] splittedLines = MyText.Text.Split(new[] { Environment.NewLine }
-                //                                  , StringSplitOptions.None);
-                //    //MessageBox.Show(splittedLines.Length.ToString());
-                //    localFiles[MainTabControl.SelectedIndex].Contentline = splittedLines.Length;
-                //    Content_Line.Text = "";
-                //    int max = Convert.ToInt32(localFiles[MainTabControl.SelectedIndex].Contentline);
-                //    for (int i = 1; i <= max; i++)
-                //    {
-                //        Content_Line.Text += i.ToString() + '\n';
-                //    }
-            }
-        }
 
         private void Menu_Help_AboutJCode_Click(object sender, RoutedEventArgs e)
         {
@@ -478,6 +305,18 @@ namespace JCode
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
         }
 
-        
+        private void Content_RichTextBox_TextChanged(object sender, EventArgs e)
+        {
+            /*Debug.WriteLine(Content_RichTextBox.Text);
+
+            if (changingTab == false)
+            {
+                ((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]).ischanged = true;
+
+                *//*TextRange textRange = new TextRange(Content_RichTextBox.Document.ContentStart, Content_RichTextBox.Document.ContentEnd);*//*
+                ((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]).FileContent = Content_RichTextBox.Text;
+
+            }*/
+        }
     }
 }

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\zouqi\Desktop\Projects\JCode\JCode\obj\Release\net6.0-windows\
+D:\zqt\JCodeGithub\JCode\JCode\obj\Release\net6.0-windows\
 JCode
 none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
-C:\Users\zouqi\Desktop\Projects\JCode\JCode\App.xaml
-11407045341
+D:\zqt\JCodeGithub\JCode\JCode\App.xaml
+4-56513555
 
-7-446784858
-1942007414746
-MainWindow.xaml;
+101829117956
+2041723349318
+MainWindow.xaml;OtherWindow\AboutWindow.xaml;OtherWindow\BuildSettingsWindow.xaml;OtherWindow\Dictionaries\BuildSettingsWindowDictionary.xaml;
 
 False
 

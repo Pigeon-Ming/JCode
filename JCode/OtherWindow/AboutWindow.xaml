@@ -12,9 +12,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="2">
-            <TextBlock Text="JCode 1.1" FontSize="20"/>
-            <TextBlock Text="服务于JigsawOS的IDE"/>
-            <TextBlock Text="(C)Pigeon_Ming 2022"/>
+            <TextBlock Text="JCode 1.2" FontSize="20"/>
+            <TextBlock Text="为JigsawOS开发者打造的IDE（"/>
+            <TextBlock Text="(C)Pigeon_Ming 2023"/>
         </StackPanel>
     </Grid>
 </Window>

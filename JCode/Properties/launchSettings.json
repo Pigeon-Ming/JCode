@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "JCode": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false,
+      "authenticationMode": "Windows",
+      "remoteDebugMachine": "LAPTOP-00DFTMDK:4026"
+    }
+  }
+}

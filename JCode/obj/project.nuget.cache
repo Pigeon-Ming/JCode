@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "5yok1LLpSuXeSyCm9CmXVkcd4sx9aETzpxU0UbNTLnioV25NB4dxvf76X6E1gMrHYhGIy21JeHiSNkpYht9rNQ==",
+  "dgSpecHash": "li5zX6sKCAOWNZgx8BXvYcniLisiiHx38qg8HlovfNsC9QTBJziRMkxrLvceanfFxnU3XvL4TQNGkXgZ+w8gOQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\zouqi\\Desktop\\Projects\\JCodeGithub\\JCode\\JCode\\JCode.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\zqt\\JCodeGithub\\JCode\\JCode\\JCode.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\avalonedit\\6.3.0.90\\avalonedit.6.3.0.90.nupkg.sha512"
+  ],
   "logs": []
 }
