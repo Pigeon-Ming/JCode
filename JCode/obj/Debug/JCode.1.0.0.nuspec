@@ -6,7 +6,9 @@
     <authors>JCode</authors>
     <description>Package Description</description>
     <dependencies>
-      <group targetFramework="net6.0-windows7.0" />
+      <group targetFramework="net6.0-windows7.0">
+        <dependency id="AvalonEdit" version="6.3.0.90" exclude="Build,Analyzers" />
+      </group>
     </dependencies>
     <frameworkReferences>
       <group targetFramework="net6.0-windows7.0">
@@ -15,7 +17,7 @@
     </frameworkReferences>
   </metadata>
   <files>
-    <file src="C:\Users\zouqi\Desktop\Projects\JCode\JCode\bin\Debug\net6.0-windows\JCode.runtimeconfig.json" target="lib\net6.0-windows7.0\JCode.runtimeconfig.json" />
-    <file src="C:\Users\zouqi\Desktop\Projects\JCode\JCode\bin\Debug\net6.0-windows\JCode.dll" target="lib\net6.0-windows7.0\JCode.dll" />
+    <file src="D:\zqt\JCodeGithub\JCode\JCode\bin\Debug\net6.0-windows\JCode.runtimeconfig.json" target="lib\net6.0-windows7.0\JCode.runtimeconfig.json" />
+    <file src="D:\zqt\JCodeGithub\JCode\JCode\bin\Debug\net6.0-windows\JCode.dll" target="lib\net6.0-windows7.0\JCode.dll" />
   </files>
 </package>

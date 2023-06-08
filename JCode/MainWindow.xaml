@@ -11,16 +11,21 @@
         <ResourceDictionary>
             <ContextMenu  x:Key="MainTabControl_RightButtonUpMenu" >
                 <MenuItem Header="复制文件路径" Name="MainTabControl_RightButtonUpMenu_CopyFilePath" Click="MainTabControl_RightButtonUpMenu_CopyFilePath_Click"/>
+                <MenuItem Header="重新加载文件" Name="MainTabControl_RightButtonUpMenu_ReloadFile" Click="MainTabControl_RightButtonUpMenu_ReloadFile_Click"/>
                 <Separator/>
                 <MenuItem Header="关闭" Name="MainTabControl_RightButtonUpMenu_CloseFile" Click="MainTabControl_RightButtonUpMenu_CloseFile_Click"/>
             </ContextMenu>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MainWindowDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="0.4*" MinHeight="28"/>
@@ -57,16 +62,24 @@
                 
             </ToolBar>
         </ToolBarTray>
-        <TabControl ContextMenu="{StaticResource MainTabControl_RightButtonUpMenu}" MouseRightButtonUp="MainTabControl_MouseRightButtonUp" Name="MainTabControl" SelectionChanged="MainTabControl_SelectionChanged" Grid.Row="2" TabStripPlacement="Top">
-            <TabControl.ItemTemplate>
-                <DataTemplate DataType="local1:LocalFile">
-                    <TextBlock Text="{Binding Name}"/>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-        </TabControl>
-        <Grid Name="EditControl" Visibility="Collapsed" Grid.Row="3">
+        <ScrollViewer Template="{StaticResource MyScrollViewer}" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Visible" Height="33" Grid.Row="2">
+            
+            <TabControl Height="27" ContextMenu="{StaticResource MainTabControl_RightButtonUpMenu}" Name="MainTabControl" SelectionChanged="MainTabControl_SelectionChanged"  TabStripPlacement="Top">
+                <TabControl.ItemTemplate>
+                    <DataTemplate DataType="local1:LocalFile">
+                        <Grid MouseRightButtonUp="MainTabControl_MouseRightButtonUp" ContextMenu="{StaticResource MainTabControl_RightButtonUpMenu}">
+                            <StackPanel Orientation="Horizontal" Margin="0">
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                <Button Name="MainTabControl_CloseTabBtn" Margin="4,0,0,0" Background="Transparent" BorderBrush="Transparent" Click="MainTabControl_CloseTabBtn_Click" Content="×"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+            </TabControl>
+        </ScrollViewer>
+        <Grid Name="EditControl" Visibility="Collapsed" Grid.Row="3" PreviewMouseWheel="EditControl_PreviewMouseWheel">
 
-            <avalonEdit:TextEditor Name="Content_RichTextBox" SyntaxHighlighting="c" ShowLineNumbers="True" TextChanged="Content_RichTextBox_TextChanged"/>
+            <avalonEdit:TextEditor Name="Content_RichTextBox" SyntaxHighlighting="C++"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ShowLineNumbers="True" TextChanged="Content_RichTextBox_TextChanged"/>
             <!--<RichTextBox HorizontalContentAlignment="Right" IsEnabled="False" Name="Content_Line" Margin="0,0,0,0" HorizontalAlignment="Stretch" />
                 <RichTextBox Grid.Column="1" Name="Content_RichTextBox" TextChanged="Content_RichTextBox_TextChanged" >
                     <RichTextBox.Resources>

@@ -39,19 +39,21 @@ namespace JCode.Model
 
         public static bool SaveFile(LocalFile file)
         {
-            
+            Debug.WriteLine("保存文件:"+file.FileLocation);
 
 
             if (string.IsNullOrEmpty(file.FileLocation))
             {
-                SaveFileAs(file);
+                return SaveFileAs(file);
+                
             }
             else
             {
+                file.ischanged = false;
                 File.WriteAllText(file.FileLocation, file.FileContent);
                 return true;
             }
-            return false;
+            //return false;
         }
 
         public static bool SaveFileAs(LocalFile file)
@@ -64,9 +66,9 @@ namespace JCode.Model
             }
             if (saveFileDialog.ShowDialog() == true)
             {
-
+                file.FileLocation = saveFileDialog.FileName;
                 File.WriteAllText(saveFileDialog.FileName, file.FileContent);
-
+                file.ischanged = false;
                 return true;
             }
             return false;

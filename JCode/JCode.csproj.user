@@ -12,6 +12,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="MainWindowDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="OtherWindow\AboutWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

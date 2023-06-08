@@ -102,3 +102,4 @@ D:\zqt\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\JCode.genruntimeconfig.c
 D:\zqt\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\ref\JCode.dll
 D:\zqt\JCodeGithub\JCode\JCode\bin\Debug\net6.0-windows\ICSharpCode.AvalonEdit.dll
 D:\zqt\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\JCode.csproj.CopyComplete
+D:\zqt\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\MainWindowDictionary.baml

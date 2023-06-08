@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using JCode.Model;
 using JCode.OtherWindow;
+using Microsoft.Win32;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace JCode
@@ -76,7 +78,7 @@ namespace JCode
 
         void CreatFile()
         {
-            LocalFile file = new LocalFile { Name="未命名"+(++NewFileNameIndex),FileContent="\0",ischanged=false};
+            LocalFile file = new LocalFile { Name="未命名"+(++NewFileNameIndex),FileContent="",ischanged=false};
             //localFiles.Add(file);
             MainTabControl.Items.Add(file);
             MainTabControl.SelectedItem = file;
@@ -164,19 +166,10 @@ namespace JCode
         {
             LocalFile file = ((LocalFile)MainTabControl.Items[FileIndexInTab]);
             Debug.WriteLine(file.FileContent+"\n"+file.FileLocation);
-            if (string.IsNullOrEmpty(file.FileLocation))
-            {
-                LocalFileManager.SaveFileAs(file);
-                MainTabControl.Items.RemoveAt(FileIndexInTab);
-                if (MainTabControl.Items.Count==0)
-                {
-                    EditControl.Visibility = Visibility.Collapsed;
-                }
-                return true;
-            }
+            
             if (file.ischanged)
             {
-                switch (MessageBox.Show("是否保存对“"+file.Name+"”所作的更改？", "提示", MessageBoxButton.YesNoCancel,MessageBoxImage.Question))
+                switch (System.Windows.MessageBox.Show("是否保存对“"+file.Name+"”所作的更改？", "提示", MessageBoxButton.YesNoCancel,MessageBoxImage.Question))
                 {
                     case MessageBoxResult.Yes:
                         //写入文件
@@ -184,18 +177,21 @@ namespace JCode
                         
                         break;
                     case MessageBoxResult.No:
-                        //不写入文件
-                        
                         break;
                     case MessageBoxResult.Cancel:
                         //不关闭文件
                         return false;
                 }
             }
-            MainTabControl.Items.RemoveAt(FileIndexInTab);
+            //MainTabControl.Items.RemoveAt(FileIndexInTab);
             if (MainTabControl.Items.Count == 0)
             {
                 EditControl.Visibility = Visibility.Collapsed;
+            }
+            MainTabControl.Items.RemoveAt(FileIndexInTab);
+            if (MainTabControl.SelectedIndex==-1)
+            {
+                Content_RichTextBox.Visibility= Visibility.Collapsed;
             }
             return true;
         }
@@ -226,7 +222,8 @@ namespace JCode
 
         private void Menu_File_Save_Click(object sender, RoutedEventArgs e)
         {
-            LocalFileManager.SaveFile((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]);
+            //((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]).FileContent = Content_RichTextBox.Text;
+            LocalFileManager.SaveFile(((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]));
         }
 
         private void Menu_File_SaveAs_Click(object sender, RoutedEventArgs e)
@@ -252,21 +249,31 @@ namespace JCode
             BuildProgram();
         }
 
+
+        bool changeingTab = false;
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
+            changeingTab = true;
             if (MainTabControl.SelectedIndex == -1)
             {
                 lastSelectTab = -1;
                 return;
             }
+            Content_RichTextBox.Visibility = Visibility.Visible;
             if (lastSelectTab != -1 && lastSelectTab < MainTabControl.Items.Count)
             {
-                Debug.WriteLine(lastSelectTab+"||"+MainTabControl.SelectedIndex);
+                //Debug.WriteLine(lastSelectTab+"||"+MainTabControl.SelectedIndex);
                 ((LocalFile)MainTabControl.Items[lastSelectTab]).FileContent = Content_RichTextBox.Text;
             }
-            
-            
-            Content_RichTextBox.Text = ((LocalFile)MainTabControl.SelectedItem).FileContent;
+
+            if (!String.IsNullOrEmpty(((LocalFile)MainTabControl.SelectedItem).FileContent))
+            {
+                Content_RichTextBox.Text = ((LocalFile)MainTabControl.SelectedItem).FileContent;
+                //Debug.WriteLine(":::"+((LocalFile)MainTabControl.SelectedItem).FileContent);
+            } 
+            else
+                Content_RichTextBox.Text = "";
             lastSelectTab = MainTabControl.SelectedIndex;
         }
 
@@ -278,24 +285,32 @@ namespace JCode
             aboutWindow.ShowDialog();
         }
 
+
+        int MainTabContol_RightClickItem = -1;
         private void MainTabControl_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            
+            MainTabContol_RightClickItem = MainTabControl.Items.IndexOf(((Grid)sender).DataContext as LocalFile);
         }
 
         private void MainTabControl_RightButtonUpMenu_CopyFilePath_Click(object sender, RoutedEventArgs e)
         {
-            LocalFile file = (LocalFile)MainTabControl.SelectedItem;
+            if (MainTabContol_RightClickItem == -1)
+                return;
+            LocalFile file = (LocalFile)MainTabControl.Items[MainTabContol_RightClickItem];
             if (string.IsNullOrEmpty(file.FileLocation))
             {
                 return;
             }
-            Clipboard.SetDataObject(file.FileLocation, true);
+            System.Windows.Clipboard.SetDataObject(file.FileLocation, true);
         }
 
         private void MainTabControl_RightButtonUpMenu_CloseFile_Click(object sender, RoutedEventArgs e)
         {
-            CloseFile(MainTabControl.SelectedIndex);
+            if (MainTabContol_RightClickItem!=-1)
+            {
+                CloseFile(MainTabContol_RightClickItem);
+                MainTabContol_RightClickItem = -1;
+            }
         }
 
         private void Menu_Help_DevDocument_Click(object sender, RoutedEventArgs e)
@@ -307,6 +322,13 @@ namespace JCode
 
         private void Content_RichTextBox_TextChanged(object sender, EventArgs e)
         {
+            if (changeingTab == false)
+            {
+                ((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]).ischanged = true;
+                ((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]).FileContent = Content_RichTextBox.Text;
+            }
+            changeingTab = false;
+
             /*Debug.WriteLine(Content_RichTextBox.Text);
 
             if (changingTab == false)
@@ -317,6 +339,42 @@ namespace JCode
                 ((LocalFile)MainTabControl.Items[MainTabControl.SelectedIndex]).FileContent = Content_RichTextBox.Text;
 
             }*/
+        }
+
+        private void MainTabControl_CloseTabBtn_Click(object sender, RoutedEventArgs e)
+        {
+            LocalFile file = ((System.Windows.Controls.Button)sender).DataContext as LocalFile;
+            CloseFile(MainTabControl.Items.IndexOf(file));
+        }
+
+        private void MainTabControl_RightButtonUpMenu_ReloadFile_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine(MainTabContol_RightClickItem);
+            LocalFile file = (LocalFile)MainTabControl.Items[MainTabContol_RightClickItem];
+            if (!String.IsNullOrEmpty(file.FileLocation))
+            {
+                
+                file.FileContent = File.ReadAllText(file.FileLocation);
+                Content_RichTextBox.Text = ((LocalFile)MainTabControl.SelectedItem).FileContent;
+                changeingTab = true;
+            }
+        }
+
+        double scale = 1;
+        private void EditControl_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                if (e.Delta < 0 && scale>0.2)
+                {
+                    scale -= 0.1;
+                }
+                else
+                {
+                    scale += 0.1;
+                }
+                Content_RichTextBox.FontSize = scale * 11;
+            }
         }
     }
 }

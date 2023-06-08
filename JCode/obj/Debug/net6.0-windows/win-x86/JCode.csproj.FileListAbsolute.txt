@@ -78,3 +78,4 @@ D:\zqt\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\refint\JCode.dll
 D:\zqt\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\JCode.pdb
 D:\zqt\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\JCode.genruntimeconfig.cache
 D:\zqt\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\ref\JCode.dll
+D:\zqt\JCodeGithub\JCode\JCode\obj\Debug\net6.0-windows\win-x86\MainWindowDictionary.baml
